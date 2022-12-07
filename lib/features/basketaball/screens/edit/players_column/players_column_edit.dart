@@ -125,34 +125,42 @@ class PlayersColumnEdit extends StatelessWidget {
         children: [
           Expanded(
             flex: 2,
-            child: ElevatedButton(
-              onPressed: () => players.resetScore(team, index),
-              child: const Icon(Icons.refresh),
+            child: FittedBox(
+              child: ElevatedButton(
+                onPressed: () => players.resetScore(team, index),
+                child: const Icon(Icons.refresh),
+              ),
             ),
           ),
           const SizedBox(width: 3),
           Expanded(
             flex: 2,
-            child: ElevatedButton(
-              onPressed: () => players.subScore(team, index),
-              child: const Icon(Icons.remove),
+            child: FittedBox(
+              child: ElevatedButton(
+                onPressed: () => players.subScore(team, index),
+                child: const Icon(Icons.remove),
+              ),
             ),
           ),
           const SizedBox(width: 5),
           Expanded(
             flex: 1,
             child: Center(
-              child: Text((team == 1)
-                  ? players.leftPlayers[index].score.toString()
-                  : players.rightPlayers[index].score.toString()),
+              child: FittedBox(
+                child: Text((team == 1)
+                    ? players.leftPlayers[index].score.toString()
+                    : players.rightPlayers[index].score.toString()),
+              ),
             ),
           ),
           const SizedBox(width: 5),
           Expanded(
             flex: 2,
-            child: ElevatedButton(
-              onPressed: () => players.addScore(team, index),
-              child: const Icon(Icons.add),
+            child: FittedBox(
+              child: ElevatedButton(
+                onPressed: () => players.addScore(team, index),
+                child: const Icon(Icons.add),
+              ),
             ),
           ),
         ],
