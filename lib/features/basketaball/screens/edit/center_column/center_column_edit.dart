@@ -177,10 +177,10 @@ class CenterColumnEdit extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: 5),
+          const SizedBox(height: 3),
           //timer button
           const Expanded(child: TimerButton()),
-          const SizedBox(height: 5),
+          const SizedBox(height: 3),
           //start,stop
           Flexible(
             child: Row(
