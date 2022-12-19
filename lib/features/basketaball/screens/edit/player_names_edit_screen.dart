@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 class PlayerNamesEditScreen extends StatefulWidget {
   final int count;
 
-  PlayerNamesEditScreen({super.key, required this.count});
+  const PlayerNamesEditScreen({super.key, required this.count});
 
   @override
   State<PlayerNamesEditScreen> createState() => _PlayerNamesEditScreenState();
@@ -71,16 +71,20 @@ class _PlayerNamesEditScreenState extends State<PlayerNamesEditScreen> {
       ),
       body: Row(children: [
         Expanded(
-            flex: 4, child: scrollablePlayersColumn(context: context, team: 1)),
+            flex: 4,
+            child: scrollablePlayersColumn(
+                context: context, count: widget.count, team: 1)),
         Expanded(flex: 1, child: Container()),
         Expanded(
-            flex: 4, child: scrollablePlayersColumn(context: context, team: 2)),
+            flex: 4,
+            child: scrollablePlayersColumn(
+                context: context, count: widget.count, team: 2)),
       ]),
     );
   }
 
   Widget scrollablePlayersColumn(
-      {required BuildContext context, required int team}) {
+      {required BuildContext context, required int count, required int team}) {
     return LayoutBuilder(
       builder: (context, constraits) => ListView(
         //controller: ScrollController(),
@@ -89,7 +93,7 @@ class _PlayerNamesEditScreenState extends State<PlayerNamesEditScreen> {
             constraints: BoxConstraints(minHeight: constraits.maxHeight),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: List<Widget>.generate(widget.count, (int index) {
+              children: List<Widget>.generate(count, (int index) {
                 return Container(
                   padding: const EdgeInsets.all(5),
                   height: rowHeight,

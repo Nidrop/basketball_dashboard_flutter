@@ -1,6 +1,5 @@
 import 'package:basketball_dashboard_flutter/features/basketaball/models/period.dart';
 import 'package:basketball_dashboard_flutter/features/basketaball/models/teams.dart';
-import 'package:basketball_dashboard_flutter/features/basketaball/models/timer.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
