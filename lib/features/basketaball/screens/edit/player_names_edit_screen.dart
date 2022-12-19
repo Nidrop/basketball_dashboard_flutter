@@ -72,22 +72,57 @@ class _PlayerNamesEditScreenState extends State<PlayerNamesEditScreen> {
       body: Row(children: [
         Expanded(
             flex: 4,
-            child: scrollablePlayersColumn(
-                context: context, count: widget.count, team: 1)),
+            child: ScrollablePlayersColumn(
+                rowHeight: rowHeight,
+                leftNumbers: leftNumbers,
+                rightNumbers: rightNumbers,
+                leftNames: leftNames,
+                rightNames: rightNames,
+                count: widget.count,
+                team: 1)),
         Expanded(flex: 1, child: Container()),
         Expanded(
             flex: 4,
-            child: scrollablePlayersColumn(
-                context: context, count: widget.count, team: 2)),
+            child: ScrollablePlayersColumn(
+                rowHeight: rowHeight,
+                leftNumbers: leftNumbers,
+                rightNumbers: rightNumbers,
+                leftNames: leftNames,
+                rightNames: rightNames,
+                count: widget.count,
+                team: 2)),
       ]),
     );
   }
+}
 
-  Widget scrollablePlayersColumn(
-      {required BuildContext context, required int count, required int team}) {
+class ScrollablePlayersColumn extends StatelessWidget {
+  ScrollablePlayersColumn({
+    Key? key,
+    required this.rowHeight,
+    required this.leftNumbers,
+    required this.rightNumbers,
+    required this.leftNames,
+    required this.rightNames,
+    required this.count,
+    required this.team,
+  }) : super(key: key);
+
+  final double rowHeight;
+  final List<TextEditingController> leftNumbers;
+  final List<TextEditingController> rightNumbers;
+  final List<TextEditingController> leftNames;
+  final List<TextEditingController> rightNames;
+  final int count;
+  final int team;
+
+  final scrollController = ScrollController();
+
+  @override
+  Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraits) => ListView(
-        //controller: ScrollController(),
+        controller: scrollController,
         children: [
           Container(
             constraints: BoxConstraints(minHeight: constraits.maxHeight),
