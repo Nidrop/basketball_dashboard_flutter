@@ -12,8 +12,7 @@ class TimerButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<TimerModel>(
-      builder: (context, timer, child) => ConstrainedBox(
-        constraints: const BoxConstraints.tightFor(width: 300, height: 400),
+      builder: (context, timer, child) => FittedBox(
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
             backgroundColor: Colors.blueGrey,
@@ -36,7 +35,7 @@ class TimerButton extends StatelessWidget {
             "${timer.periodTime.minute < 10 ? '0${timer.periodTime.minute}' : timer.periodTime.minute}"
             ":${timer.periodTime.second < 10 ? '0${timer.periodTime.second}' : timer.periodTime.second}"
             ".${timer.periodTime.millisecond ~/ 100}",
-            style: const TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
+            style: const TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
           ),
         ),
       ),
