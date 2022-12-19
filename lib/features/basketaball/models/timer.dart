@@ -16,19 +16,42 @@ class TimerModel extends ChangeNotifier {
 
   void setPeriodTime(DateTime d) {
     periodTime = d;
+    isPaused = true;
+    periodTimer?.cancel();
     notifyListeners();
   }
 
   //todo
-  void startOrStopTimeoutTime() {
-    timeoutTime = DateTime.fromMillisecondsSinceEpoch(10 * 60 * 1000);
-    notifyListeners();
+  void startOrStopTimeoutTimer() {
+    if (isPeriod) {
+      isPeriod = false;
+      isPaused = true;
+
+      periodTimer?.cancel();
+      timeoutTime = DateTime.fromMillisecondsSinceEpoch(2 * 60 * 1000);
+      timeoutTimer = Timer.periodic(const Duration(milliseconds: 100), (timer) {
+        if (timeoutTime.millisecondsSinceEpoch == 0) {
+          timeoutTimer?.cancel();
+          notifyListeners();
+          return;
+        }
+        timeoutTime = timeoutTime.add(const Duration(milliseconds: -100));
+        notifyListeners();
+      });
+    } else {
+      isPeriod = true;
+      isPaused = true; //not necessary
+      timeoutTimer?.cancel();
+      notifyListeners();
+    }
   }
 
   void startOrPausePeriodTimer() {
     if (isPaused) {
       isPaused = false;
+      isPeriod = true;
 
+      timeoutTimer?.cancel();
       periodTimer = Timer.periodic(const Duration(milliseconds: 100), (timer) {
         if (periodTime.millisecondsSinceEpoch == 0) {
           periodTimer?.cancel();
@@ -41,6 +64,7 @@ class TimerModel extends ChangeNotifier {
       });
     } else {
       isPaused = true;
+      isPeriod = true; //not necessary
       periodTimer?.cancel();
       notifyListeners();
     }

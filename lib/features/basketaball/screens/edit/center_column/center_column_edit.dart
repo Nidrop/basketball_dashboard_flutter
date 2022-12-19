@@ -206,16 +206,28 @@ class CenterColumnEdit extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: 5),
+          const SizedBox(height: 15),
           //timeout
           Flexible(
             child: Consumer<TimerModel>(
               builder: (context, timer, child) => ElevatedButton(
                 onPressed: () {
-                  timer.startOrStopTimeoutTime();
+                  timer.startOrStopTimeoutTimer();
                 },
                 child: const Text("Таймаут"),
               ),
+            ),
+          ),
+          Flexible(
+            child: Consumer<TimerModel>(
+              builder: (context, timer, child) => Text(
+                  (!timer.isPeriod)
+                      ? "${timer.timeoutTime.minute < 10 ? '0${timer.timeoutTime.minute}' : timer.timeoutTime.minute}"
+                          ":${timer.timeoutTime.second < 10 ? '0${timer.timeoutTime.second}' : timer.timeoutTime.second}"
+                          ".${timer.timeoutTime.millisecond ~/ 100}"
+                      : "",
+                  style: const TextStyle(
+                      fontSize: 25, fontWeight: FontWeight.bold)),
             ),
           ),
         ],
