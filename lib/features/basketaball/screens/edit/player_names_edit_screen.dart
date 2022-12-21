@@ -1,6 +1,7 @@
 import 'package:basketball_dashboard_flutter/features/basketaball/models/players.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:virtual_keyboard_multi_language/virtual_keyboard_multi_language.dart';
 
 class PlayerNamesEditScreen extends StatefulWidget {
   final int count;
@@ -8,10 +9,10 @@ class PlayerNamesEditScreen extends StatefulWidget {
   const PlayerNamesEditScreen({super.key, required this.count});
 
   @override
-  State<PlayerNamesEditScreen> createState() => _PlayerNamesEditScreenState();
+  State<PlayerNamesEditScreen> createState() => PlayerNamesEditScreenState();
 }
 
-class _PlayerNamesEditScreenState extends State<PlayerNamesEditScreen> {
+class PlayerNamesEditScreenState extends State<PlayerNamesEditScreen> {
   final double rowHeight = 50;
 
   late PlayersModel players;
@@ -19,6 +20,8 @@ class _PlayerNamesEditScreenState extends State<PlayerNamesEditScreen> {
   late List<TextEditingController> rightNumbers;
   late List<TextEditingController> leftNames;
   late List<TextEditingController> rightNames;
+
+  late TextEditingController focusedController;
 
   @override
   void initState() {
@@ -37,6 +40,8 @@ class _PlayerNamesEditScreenState extends State<PlayerNamesEditScreen> {
       rightNumbers[i].text = players.rightPlayers[i].number;
       rightNames[i].text = players.rightPlayers[i].name;
     }
+
+    focusedController = leftNumbers[0];
   }
 
   @override
@@ -69,52 +74,61 @@ class _PlayerNamesEditScreenState extends State<PlayerNamesEditScreen> {
               icon: const Icon(Icons.check)),
         ],
       ),
-      body: Row(children: [
+      body: Column(children: [
         Expanded(
-            flex: 4,
-            child: ScrollablePlayersColumn(
-                rowHeight: rowHeight,
-                leftNumbers: leftNumbers,
-                rightNumbers: rightNumbers,
-                leftNames: leftNames,
-                rightNames: rightNames,
-                count: widget.count,
-                team: 1)),
-        Expanded(flex: 1, child: Container()),
+          child: Row(children: [
+            Expanded(
+                flex: 4,
+                child: ScrollablePlayersColumn(
+                    rowHeight: rowHeight,
+                    team: 1,
+                    count: widget.count,
+                    owner: this)),
+            Expanded(flex: 1, child: Container()),
+            Expanded(
+                flex: 4,
+                child: ScrollablePlayersColumn(
+                  rowHeight: rowHeight,
+                  team: 2,
+                  count: widget.count,
+                  owner: this,
+                )),
+          ]),
+        ),
         Expanded(
-            flex: 4,
-            child: ScrollablePlayersColumn(
-                rowHeight: rowHeight,
-                leftNumbers: leftNumbers,
-                rightNumbers: rightNumbers,
-                leftNames: leftNames,
-                rightNames: rightNames,
-                count: widget.count,
-                team: 2)),
+          child: VirtualKeyboard(
+            textController: focusedController,
+            defaultLayouts: const [
+              VirtualKeyboardDefaultLayouts.Russian,
+              VirtualKeyboardDefaultLayouts.English,
+            ],
+            type: VirtualKeyboardType.Alphanumeric,
+            onKeyPress: (key) {
+              if (key.keyType == VirtualKeyboardKeyType.String) {
+                //leftNames[1].text += key.text;
+
+              }
+            },
+          ),
+        ),
       ]),
     );
   }
 }
 
 class ScrollablePlayersColumn extends StatelessWidget {
-  ScrollablePlayersColumn({
-    Key? key,
-    required this.rowHeight,
-    required this.leftNumbers,
-    required this.rightNumbers,
-    required this.leftNames,
-    required this.rightNames,
-    required this.count,
-    required this.team,
-  }) : super(key: key);
+  ScrollablePlayersColumn(
+      {Key? key,
+      required this.rowHeight,
+      required this.team,
+      required this.count,
+      required this.owner})
+      : super(key: key);
 
   final double rowHeight;
-  final List<TextEditingController> leftNumbers;
-  final List<TextEditingController> rightNumbers;
-  final List<TextEditingController> leftNames;
-  final List<TextEditingController> rightNames;
-  final int count;
   final int team;
+  final int count;
+  PlayerNamesEditScreenState owner;
 
   final scrollController = ScrollController();
 
@@ -142,8 +156,14 @@ class ScrollablePlayersColumn extends StatelessWidget {
                               labelText: "Номер",
                             ),
                             controller: (team == 1)
-                                ? leftNumbers[index]
-                                : rightNumbers[index],
+                                ? owner.leftNumbers[index]
+                                : owner.rightNumbers[index],
+                            onTap: () {
+                              owner.focusedController = (team == 1)
+                                  ? owner.leftNumbers[index]
+                                  : owner.rightNumbers[index];
+                              owner.setState(() {});
+                            },
                           )),
                       const SizedBox(width: 5),
                       Expanded(
@@ -154,8 +174,14 @@ class ScrollablePlayersColumn extends StatelessWidget {
                               labelText: "ФИО",
                             ),
                             controller: (team == 1)
-                                ? leftNames[index]
-                                : rightNames[index],
+                                ? owner.leftNames[index]
+                                : owner.rightNames[index],
+                            onTap: () {
+                              owner.focusedController = (team == 1)
+                                  ? owner.leftNames[index]
+                                  : owner.rightNames[index];
+                              owner.setState(() {});
+                            },
                           )),
                     ],
                   ),

@@ -34,6 +34,9 @@ dependencies:
   provider: ^6.0.4
   wheel_chooser: ^1.0.0
   reliable_interval_timer: ^1.0.0
+  #virtual_keyboard_multi_language: ^1.0.3
+  virtual_keyboard_multi_language:
+    path: ./deps/virtual_keyboard_multi_language-1.0.3
 
 
   # The following adds the Cupertino Icons font to your application.
