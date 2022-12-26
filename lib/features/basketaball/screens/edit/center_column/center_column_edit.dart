@@ -25,7 +25,7 @@ class CenterColumnEdit extends StatelessWidget {
           ),
         ),
         //timer
-        Expanded(flex: 3, child: TimerEdit(context: context)),
+        Expanded(flex: 3, child: TimerEdit()),
         //falls
         Expanded(
           flex: 1,

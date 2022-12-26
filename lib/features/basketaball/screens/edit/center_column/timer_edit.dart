@@ -7,10 +7,7 @@ import 'timer_dialog.dart';
 class TimerEdit extends StatelessWidget {
   const TimerEdit({
     Key? key,
-    required this.context,
   }) : super(key: key);
-
-  final BuildContext context;
 
   @override
   Widget build(BuildContext context) {
