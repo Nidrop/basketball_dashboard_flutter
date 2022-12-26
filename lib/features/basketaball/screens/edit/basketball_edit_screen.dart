@@ -1,5 +1,6 @@
 import 'package:basketball_dashboard_flutter/features/basketaball/models/period.dart';
 import 'package:basketball_dashboard_flutter/features/basketaball/models/teams.dart';
+import 'package:basketball_dashboard_flutter/features/basketaball/screens/view/basketball_view_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -34,7 +35,13 @@ class BasketballEditPage extends StatelessWidget {
           IconButton(onPressed: () {}, icon: const Icon(Icons.connected_tv)),
           IconButton(
             //TODO create new window
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const BasketballViewPage(count: 12)),
+              );
+            },
             icon: const Icon(Icons.add_box),
           ),
         ],
