@@ -8,8 +8,8 @@ class PlayersColumnEdit extends StatelessWidget {
   final int team;
   final int count;
   final double rowHeight;
-  final scrollController = ScrollController();
-  PlayersColumnEdit({
+  //final scrollController = ScrollController();
+  const PlayersColumnEdit({
     Key? key,
     required this.team,
     required this.count,
@@ -27,7 +27,7 @@ class PlayersColumnEdit extends StatelessWidget {
         Expanded(
           child: LayoutBuilder(
             builder: (context, constraits) => ListView(
-              controller: scrollController,
+              //controller: scrollController,
               children: [
                 Container(
                   constraints: BoxConstraints(minHeight: constraits.maxHeight),

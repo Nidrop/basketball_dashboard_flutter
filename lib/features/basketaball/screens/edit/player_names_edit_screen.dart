@@ -45,6 +45,21 @@ class PlayerNamesEditScreenState extends State<PlayerNamesEditScreen> {
   }
 
   @override
+  void dispose() {
+    for (var i = 0; i < widget.count; i++) {
+      leftNumbers[i].dispose();
+      leftNames[i].dispose();
+      rightNumbers[i].dispose();
+      rightNames[i].dispose();
+    }
+    leftNumbers.clear();
+    leftNames.clear();
+    rightNumbers.clear();
+    rightNames.clear();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -117,7 +132,7 @@ class PlayerNamesEditScreenState extends State<PlayerNamesEditScreen> {
 }
 
 class ScrollablePlayersColumn extends StatelessWidget {
-  ScrollablePlayersColumn(
+  const ScrollablePlayersColumn(
       {Key? key,
       required this.rowHeight,
       required this.team,
@@ -128,15 +143,15 @@ class ScrollablePlayersColumn extends StatelessWidget {
   final double rowHeight;
   final int team;
   final int count;
-  PlayerNamesEditScreenState owner;
+  final PlayerNamesEditScreenState owner;
 
-  final scrollController = ScrollController();
+  //final scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraits) => ListView(
-        controller: scrollController,
+        //controller: scrollController,
         children: [
           Container(
             constraints: BoxConstraints(minHeight: constraits.maxHeight),
